@@ -202,7 +202,10 @@ void loop() {
           MotorL(-255);                        //ele irá recuar pra não cair para fora
           MotorR(-255);
         }
-        break;  
+        break;
+      case 14: //Chave DIP 1110 (Estratégia ????)
+        //Comandos
+        break;    
     }
   }
   else{                                     // assume que o robô deve ficar parado e está sob piso preto

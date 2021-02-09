@@ -152,6 +152,7 @@ void MotorR(int pwm){
 // returns a value between 0 and 15
 // retorna um valor entre 0 e 15
 // devuelve un valor entre 0 y 15
+
 //Segundo o regulamento da competição, a posição padrão da chave DIP será 1111
 //Ou seja, a função readDIP retornará o valor de n como sendo 15
 //A partir disso e com a estratégia base funcionando, desenvolver as demais

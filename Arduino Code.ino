@@ -40,6 +40,12 @@ void MotorR(int pwm); // right motor / motor direito / motor derecho
 int readDIP(); // read DIP switch / ler chave DIP / leer el interruptor DIP
 /*******FUNCTIONS - END*******/
  
+int start;            //Variáveis para indicar se o robô deve ser acionado ou permanecer parado
+int frontR,frontL;    //Variáveis para indicar o valor mais recente retornado pelo sensor frontal de direita e da esquerda
+int infR,infL;        //Variáveis para indicar o valor mais recente retornado pelo sensor inferior de direita e da esquerda
+int infR_min=255;     //Variáveis para definir o valor mínimo aceitável pelo sensor de linha de direita
+int infL_min=255;     //Variáveis para definir o valor mínimo aceitável pelo sensor de linha de direita
+
 void setup() {
  
   /****************PINOUT CONFIG****************/
@@ -83,10 +89,8 @@ void setup() {
   /*************INITIAL CONDITIONS - END*************/
 }
  
-void loop() {
-  
-}
- 
+
+
 /**LEFT MOTOR CONTROL / CONTROLE DO MOTOR ESQUERDO / CONTROL DEL MOTOR IZQUIERDO**/
 // pwm = 0 -> stopped / parado / parado
 // 0<pwm<=255 -> forward / para frente / seguir adelante
@@ -158,4 +162,50 @@ int readDIP(){
     n|= (1<<2);
   if(digitalRead(DIP1)==HIGH)
     n|= (1<<3);
+}
+
+void loop() {
+  start = digitalRead(microST);           //verifica se o micro-start foi ligadopleo controle do juiz, iniciando luta
+  if(start==1){                           //se foi ligado o rb6o de movimenta
+    digitalWrite(LED, LOW);               // liga o LED  
+    infR = digitalRead(lineR);
+    infL = digitalRead(lineR);
+    if ((infR==0)&&(infL==0)){            //caso os sensores IR inferiores não detectem a linha 
+      frontR = digitalRead(distR);        //realiza a leitura dos 2 sensores frontais
+      frontL = digitalRead(distL);
+      if((frontR==1)&&(frontL==1)){        //se os dois sensores frontais detectam o adversário
+        MotorL(255);                       //o robô avança na direção do adversário
+        MotorR(255);
+      }
+      else if((frontR==0)&&(frontL==1)){   //caso o sensor frontal da direita pare de detectar o adversário
+        MotorL(0);                         //o robô para o motor esquerdo e  
+        MotorR(255);                       //gira o motor direito tentando identificar novamente o adversário
+      }
+      else if ((frontR==1)&&(frontL==0)){  //caso o sensor frontal da direita pare de detectar o adversário
+        MotorR(0);                         //o robô para o motor direito e  
+        MotorL(255);                       //gira o motor esquerdo tentando identificar novamente o adversário
+      }
+      else{
+        MotorL(255);                       //caso o robô não esteja detectando o adversário ele irá girar em sentido horário
+        MotorR(-255);                      //com ambos os motores em máxima potência
+      }
+    }
+    else{                                  //caso o robô detecte a borda do dojo
+      MotorL(-255);                        //ele irá recuar pra não cair para fora
+      MotorR(-255);
+    }
+  }
+  else{                                     // assume que o robô deve ficar parado e está sob piso preto
+    digitalWrite(LED, LOW);                 // LED desligado 
+    MotorL(0);                              // motores parados 
+    MotorR(0);                              // depois cofere o menor valor detectado quando o sensor esta detectando a cor preta
+    infR = digitalRead(lineR);              // lê o valor atual do sensor de linha
+    if(infR<infR_min){
+      infR_min=infR;
+    }
+    infL = digitalRead(lineL);
+    if(infL<infL_min){
+      infL_min=infL;
+    }
+  }
 }

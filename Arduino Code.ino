@@ -172,32 +172,37 @@ int readDIP(){
 void loop() {
   start = digitalRead(microST);           //verifica se o micro-start foi ligadopleo controle do juiz, iniciando luta
   if(start==1){                           //se foi ligado o rb6o de movimenta
-    digitalWrite(LED, LOW);               // liga o LED  
+    digitalWrite(LED, LOW);               //liga o LED  
     infR = digitalRead(lineR);
     infL = digitalRead(lineR);
-    if ((infR==0)&&(infL==0)){            //caso os sensores IR inferiores não detectem a linha 
-      frontR = digitalRead(distR);        //realiza a leitura dos 2 sensores frontais
-      frontL = digitalRead(distL);
-      if((frontR==1)&&(frontL==1)){        //se os dois sensores frontais detectam o adversário
-        MotorL(255);                       //o robô avança na direção do adversário
-        MotorR(255);
-      }
-      else if((frontR==0)&&(frontL==1)){   //caso o sensor frontal da direita pare de detectar o adversário
-        MotorL(0);                         //o robô para o motor esquerdo e  
-        MotorR(255);                       //gira o motor direito tentando identificar novamente o adversário
-      }
-      else if ((frontR==1)&&(frontL==0)){  //caso o sensor frontal da direita pare de detectar o adversário
-        MotorR(0);                         //o robô para o motor direito e  
-        MotorL(255);                       //gira o motor esquerdo tentando identificar novamente o adversário
-      }
-      else{
-        MotorL(255);                       //caso o robô não esteja detectando o adversário ele irá girar em sentido horário
-        MotorR(-255);                      //com ambos os motores em máxima potência
-      }
-    }
-    else{                                  //caso o robô detecte a borda do dojo
-      MotorL(-255);                        //ele irá recuar pra não cair para fora
-      MotorR(-255);
+    switch (readDIP()) //Leitura da chave DIP por meio da função readDIP
+    {
+      case 15: //Chave DIP 1111 (Estratégia Padrão)
+        if ((infR==0)&&(infL==0)){            //caso os sensores IR inferiores não detectem a linha 
+          frontR = digitalRead(distR);        //realiza a leitura dos 2 sensores frontais
+          frontL = digitalRead(distL);
+          if((frontR==1)&&(frontL==1)){        //se os dois sensores frontais detectam o adversário
+            MotorL(255);                       //o robô avança na direção do adversário
+            MotorR(255);
+          }
+          else if((frontR==0)&&(frontL==1)){   //caso o sensor frontal da direita pare de detectar o adversário
+            MotorL(0);                         //o robô para o motor esquerdo e  
+            MotorR(255);                       //gira o motor direito tentando identificar novamente o adversário
+          }
+          else if ((frontR==1)&&(frontL==0)){  //caso o sensor frontal da direita pare de detectar o adversário
+            MotorR(0);                         //o robô para o motor direito e  
+            MotorL(255);                       //gira o motor esquerdo tentando identificar novamente o adversário
+          }
+          else{
+            MotorL(255);                       //caso o robô não esteja detectando o adversário ele irá girar em sentido horário
+            MotorR(-255);                      //com ambos os motores em máxima potência
+          }
+        }
+        else{                                  //caso o robô detecte a borda do dojo
+          MotorL(-255);                        //ele irá recuar pra não cair para fora
+          MotorR(-255);
+        }
+        break;  
     }
   }
   else{                                     // assume que o robô deve ficar parado e está sob piso preto

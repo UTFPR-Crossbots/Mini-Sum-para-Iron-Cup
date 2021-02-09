@@ -152,16 +152,20 @@ void MotorR(int pwm){
 // returns a value between 0 and 15
 // retorna um valor entre 0 e 15
 // devuelve un valor entre 0 y 15
+//Segundo o regulamento da competição, a posição padrão da chave DIP será 1111
+//Ou seja, a função readDIP retornará o valor de n como sendo 15
+//A partir disso e com a estratégia base funcionando, desenvolver as demais
 int readDIP(){
   int n=0;
   if(digitalRead(DIP4)==HIGH)
     n=1;
   if(digitalRead(DIP3)==HIGH)
-    n|= (1<<1);
+    n|= (1<<1); //Bit shift (0001 --> 0010), ou seja, n =  n + 2
   if(digitalRead(DIP2)==HIGH)
-    n|= (1<<2);
+    n|= (1<<2); //Bit shift (0001 --> 0100), ou seja, n =  n + 4
   if(digitalRead(DIP1)==HIGH)
-    n|= (1<<3);
+    n|= (1<<3); //Bit shift (0001 --> 1000), ou seja, n =  n + 8
+  return n; // Valor retornado de n
 }
 
 void loop() {

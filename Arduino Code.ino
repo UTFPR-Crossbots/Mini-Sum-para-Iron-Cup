@@ -172,7 +172,7 @@ int readDIP(){
 void loop() {
   start = digitalRead(microST);           //verifica se o micro-start foi ligadopleo controle do juiz, iniciando luta
   if(start==1){                           //se foi ligado o rb6o de movimenta
-    digitalWrite(LED, LOW);               //liga o LED  
+    digitalWrite(LED, HIGH);              //liga o LED  
     infR = digitalRead(lineR);
     infL = digitalRead(lineR);
     switch (readDIP()) //Leitura da chave DIP por meio da função readDIP

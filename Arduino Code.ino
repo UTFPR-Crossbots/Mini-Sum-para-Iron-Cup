@@ -40,11 +40,13 @@ void MotorR(int pwm); // right motor / motor direito / motor derecho
 int readDIP(); // read DIP switch / ler chave DIP / leer el interruptor DIP
 /*******FUNCTIONS - END*******/
  
+/*******VARIÁVEIS*******/
 int start;            //Variáveis para indicar se o robô deve ser acionado ou permanecer parado
 int frontR,frontL;    //Variáveis para indicar o valor mais recente retornado pelo sensor frontal de direita e da esquerda
 int infR,infL;        //Variáveis para indicar o valor mais recente retornado pelo sensor inferior de direita e da esquerda
 int infR_min=255;     //Variáveis para definir o valor mínimo aceitável pelo sensor de linha de direita
 int infL_min=255;     //Variáveis para definir o valor mínimo aceitável pelo sensor de linha de direita
+bool aberturaFoiFeita = false; //Variável para identificar se o movimento de abertura foi feito
 
 void setup() {
  

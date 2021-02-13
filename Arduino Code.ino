@@ -205,8 +205,11 @@ void loop() {
           MotorR(-255);
         }
         break;
-      case 14: //Chave DIP 1110 (Estratégia ????)
-        //Comandos
+      case 14: //Chave DIP 1110 (Estratégia - A2 - Abertura em U)
+        if(aberturaFoiFeita = false){
+          //Movimento de abertura
+          aberturaFoiFeita = true;
+        }
         break;    
     }
   }

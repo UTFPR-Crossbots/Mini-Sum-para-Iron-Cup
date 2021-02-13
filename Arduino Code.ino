@@ -222,6 +222,32 @@ void loop() {
           MotorL(255);
           MotorR(-128)
         }
+        //Adversário não encontrado, checar se o mini não está saindo do dojô
+        else if(infL == 1 && infR == 0){       //Linha do dojô detectada na esquerda
+          MotorL(-255);
+          MotorR(-255);
+          //Giro para sair da beirada
+          MotorL(255);
+          MotorR(-255);
+        }
+         else if(infL == 0 && infR == 1){      //Linha do dojô detectada na direita
+          MotorL(-255);
+          MotorR(-255);
+          //Giro para sair da beirada
+          MotorL(-255);
+          MotorR(-255);
+        }
+         else if(infL == 1 && infR == 1){      //Linha do dojô detectada pelos dois sensores
+          MotorL(-255);
+          MotorR(-255);
+          //Giro para sair da beirada
+          MotorL(255);
+          MotorR(-255);
+        }
+        else{                                  //Nenhuma das condições anteriores foram satisfeitas (Andar para frente)
+          MotorL(255);
+          MotorR(255);
+        }
         break;    
     }
   }

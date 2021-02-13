@@ -207,7 +207,13 @@ void loop() {
         break;
       case 14: //Chave DIP 1110 (Estratégia - A2 - Abertura em U)
         if(aberturaFoiFeita = false){          //Verifica se o movimento de abertura foi realizado
-          //Movimento de abertura
+          //Avançar
+          MotorL(255);
+          MotorR(255);
+
+          //Girar
+          MotorL(255);
+          MotorR(-128);
           aberturaFoiFeita = true;
         }
         if(frontL == 1 && frontR == 1){        //Adversário detectado na frente do robô (Seguir em frente)

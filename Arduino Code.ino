@@ -361,19 +361,3 @@ void MotorR(int pwm){
     digitalWrite(rightMotor2, HIGH);
   }
 }
-
-/** read DIP switch / ler chave DIP / leer el interruptor DIP **/
-// returns a value between 0 and 15
-// retorna um valor entre 0 e 15
-// devuelve un valor entre 0 y 15
-int readDIP(){
-  int n=0;
-  if(digitalRead(DIP4)==HIGH)
-    n=1;
-  if(digitalRead(DIP3)==HIGH)
-    n|= (1<<1);
-  if(digitalRead(DIP2)==HIGH)
-    n|= (1<<2);
-  if(digitalRead(DIP1)==HIGH)
-    n|= (1<<3);
-}

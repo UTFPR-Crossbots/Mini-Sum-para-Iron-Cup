@@ -232,23 +232,29 @@ void loop() {
         else if(infL == 1 && infR == 0){       //Linha do dojô detectada na esquerda
           MotorL(-255);
           MotorR(-255);
+          delay(300);
           //Giro para sair da beirada
           MotorL(255);
           MotorR(-255);
+          delay(400);
         }
          else if(infL == 0 && infR == 1){      //Linha do dojô detectada na direita
           MotorL(-255);
           MotorR(-255);
+          delay(300);
           //Giro para sair da beirada
           MotorL(-255);
           MotorR(-255);
+          delay(400);
         }
          else if(infL == 1 && infR == 1){      //Linha do dojô detectada pelos dois sensores
           MotorL(-255);
           MotorR(-255);
+          delay(300);
           //Giro para sair da beirada
           MotorL(255);
           MotorR(-255);
+          delay(400);
         }
         else{                                  //Nenhuma das condições anteriores foram satisfeitas (Andar para frente)
           MotorL(255);

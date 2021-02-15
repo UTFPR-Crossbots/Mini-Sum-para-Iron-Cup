@@ -210,10 +210,11 @@ void loop() {
           //Avançar
           MotorL(255);
           MotorR(255);
-
+          delay(200);
           //Girar
           MotorL(255);
           MotorR(-128);
+          delay(300);
           aberturaFoiFeita = true;
         }
         if(frontL == 1 && frontR == 1){        //Adversário detectado na frente do robô (Seguir em frente)
@@ -260,7 +261,158 @@ void loop() {
           MotorL(255);
           MotorR(255);
         }
-        break;    
+        break;
+      case 13://Chave DIP 1101 (Pe D Valsa) (Inclinação 4)
+              //Aqui ele luta com movimento de curva e acelerações mais suaves para pegar o oponente na surpresa
+
+        if ((infR == 0) && (infL == 0))
+        {                              //caso os sensores IR inferiores não detectem a linha
+          frontR = digitalRead(distR); //realiza a leitura dos 2 sensores frontais
+          frontL = digitalRead(distL);
+          if ((frontR == 1) && (frontL == 1))
+          {              //se os dois sensores frontais detectam o adversário
+            MotorL(255); //o robô avança na direção do adversário
+            MotorR(255);
+          }
+          else if ((frontR == 0) && (frontL == 1))
+          {               //caso o sensor frontal da direita pare de detectar o adversário
+            MotorL(-200); //o robô para o motor esquerdo e
+            MotorR(200);  //gira o motor direito tentando identificar novamente o adversário
+          }
+          else if ((frontR == 1) && (frontL == 0))
+          {               //caso o sensor frontal da direita pare de detectar o adversário
+            MotorR(-200); //o robô para o motor direito e
+            MotorL(200);  //gira o motor esquerdo tentando identificar novamente o adversário
+          }
+          else
+          {
+            MotorL(150); //caso o robô não esteja detectando o adversário ele irá stalkear em sentido antihorário
+            MotorR(200); //dá pra achar valores de giro mais bacanas aqui
+          }
+        }
+        else
+        {               //caso o robô detecte a borda do dojo
+          MotorL(-160); //ele irá recuar pra não cair para fora
+          MotorR(-160);
+        }
+        break;
+      case 12://Chave DIP 1100 (De ladinho) (Posição B1 ou B5) (meme)
+              //Nisso vai pra frente e pra trás perpendicular ao oponente full meme
+        MotorL(255);
+        MotorR(255);
+
+        delay(300); //tem que acertar o timing pra ele ficar dentro da arena
+
+        MotorL(-255);
+        MotorR(-255);
+
+        delay(300);
+        break;
+      case 11://Chave DIP 1011 (Dibraldinho) (Inclinação 1) (Meme)
+              //Esse só foge dando voltas antihorárias na arena
+        if (infR == 0)
+        { //caso os sensor IR da esquerda n detecte a linha
+
+          MotorL(160); //ele ta livre pra dibrar, andando em circulos
+          MotorR(120);
+        }
+        else
+        { //caso o robô detecte a borda do dojo, faz uma baliza pra não morrer
+          MotorL(-100);
+          MotorR(-120);
+        }
+        break;
+      case 10://Chave DIP 1010 (Assassino) (Heteroflex)
+              //Essa aqui é uma abordagem diferente do padrao, com prioridade diferente. Isso é pra fazer com que ele prefira matar a se defender
+        frontR = digitalRead(distR); //realiza a leitura dos 2 sensores frontais
+        frontL = digitalRead(distL);
+        if ((frontR == 1) && (frontL == 1))
+        {              //se os dois sensores frontais detectam o adversário
+          MotorL(255); //o robô avança puto na direção do adversário
+          MotorR(255);
+        }
+        else if ((frontR == 0) && (frontL == 1) && (infL == 0))
+        {              //caso o sensor frontal da direita pare de detectar o adversário e o sensor da linha esquerda nao apite
+          MotorL(120); //o robô reduz a velocidade do motor esquerdo e
+          MotorR(255); //gira o motor direito tentando identificar novamente o adversário
+        }
+        else if ((frontR == 1) && (frontL == 0) && (infR == 0))
+        {              //caso o sensor frontal da direita pare de detectar o adversário e o sensor da linha direita nao apite
+          MotorR(120); //o robô reduz a velocidade do motor direito e
+          MotorL(255); //gira o motor esquerdo tentando identificar novamente o adversário
+        }
+        else
+        {
+          MotorL(-200); //caso o robô não esteja detectando o adversário ele irá girar de ré
+          MotorR(-255); //em sentido horário com uma potência braba
+        }
+        break;
+      case 9://Chave DIP 1001 (O Uzinho Invertido) (Posição b3)
+            //Esse aqui é o uzinho do Marco só que bait, sai de ré na abertura pra ver se o cara se mata
+        if (aberturaFoiFeita = false)
+        { //Verifica se o movimento de abertura foi realizado
+          //Recuar
+          MotorL(-255);
+          MotorR(-255);
+          delay(100);
+          //Girar
+          MotorL(-255);
+          MotorR(-120);
+          delay(200);
+          aberturaFoiFeita = true;
+        }
+        if (frontL == 1 && frontR == 1)
+        { //Adversário detectado na frente do robô (Seguir em frente)
+          MotorL(255);
+          MotorR(255);
+        }
+        else if (frontL == 1 && frontR == 0)
+        { //Adversário detectado na esquerda (Virar para a esquerda)
+          MotorL(-128);
+          MotorR(255);
+        }
+        else if (frontL == 0 && frontR == 1)
+        { //Adversário detectado na direita (Virar para a direita)
+          MotorL(255);
+          MotorR(-128)
+        }
+        //Adversário não encontrado, checar se o mini não está saindo do dojô
+        else if (infL == 1 && infR == 0)
+        { //Linha do dojô detectada na esquerda
+          MotorL(-255);
+          MotorR(-255);
+          delay(300);
+          //Giro para sair da beirada
+          MotorL(255);
+          MotorR(-255);
+          delay(400);
+        }
+        else if (infL == 0 && infR == 1)
+        { //Linha do dojô detectada na direita
+          MotorL(-255);
+          MotorR(-255);
+          delay(300);
+          //Giro para sair da beirada
+          MotorL(-255);
+          MotorR(-255);
+          delay(400);
+        }
+        else if (infL == 1 && infR == 1)
+        { //Linha do dojô detectada pelos dois sensores
+          MotorL(-255);
+          MotorR(-255);
+          delay(300);
+          //Giro para sair da beirada
+          MotorL(255);
+          MotorR(-255);
+          delay(400);
+        }
+        else
+        { //Nenhuma das condições anteriores foram satisfeitas (Andar para frente)
+          MotorL(255);
+          MotorR(255);
+        }
+        break;
     }
   }
   else{                                     // assume que o robô deve ficar parado e está sob piso preto

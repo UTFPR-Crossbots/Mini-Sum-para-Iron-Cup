@@ -227,7 +227,7 @@ void loop() {
         }
         else if(frontL == 0 && frontR == 1){   //Adversário detectado na direita (Virar para a direita)
           MotorL(255);
-          MotorR(-128)
+          MotorR(-128);
         }
         //Adversário não encontrado, checar se o mini não está saindo do dojô
         else if(infL == 1 && infR == 0){       //Linha do dojô detectada na esquerda

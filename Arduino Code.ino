@@ -181,10 +181,10 @@ void loop() {
                     //a buscar o oponente
                     MotorL(255);
                     MotorR(255);
-                    delay(160);
+                    delay(16);
                     MotorL(-255);
                     MotorR(-255);
-                    delay(250);
+                    delay(25);
                     rotacao = -1; //gira no sentido horario quando busca o oponente
                     SenDi(); //distancia
                     SenLi(); //linha
@@ -195,7 +195,7 @@ void loop() {
                     //robô faz uma curva em 45° antes de começar a buscar o oponente
                     MotorL(64);
                     MotorR(255);
-                    delay(150);
+                    delay(15);
                     rotacao = -1; //gira no sentido horario quando busca o oponente
                     SenDi(); //distancia
                     SenLi(); //linha
@@ -205,7 +205,7 @@ void loop() {
                     //by Marco Przybysz
                     //robô começa girando no próprio eixo no sentido horário
                     //para buscar o oponente
-                    senLi();
+                    SenLi();
                     MotorL(-128);
                     MotorR(128);
                     SenDi(); //distancia
@@ -214,7 +214,7 @@ void loop() {
 
                case 9: //B3: desroda jequiti
                     //espelhamento da 8
-                    senLi();
+                    SenLi();
                     MotorL(128);
                     MotorR(-128);
                     SenDi(); //distancia
@@ -225,7 +225,7 @@ void loop() {
                     //espelhamento da 7
                     MotorL(255);
                     MotorR(64);
-                    delay(150);
+                    delay(15);
                     rotacao = 1; //gira no sentido anti-horário quando busca o oponente
                     SenDi(); //distancia
                     SenLi(); //linha
@@ -235,10 +235,10 @@ void loop() {
                     //espelhamento da 6
                     MotorL(255);
                     MotorR(255);
-                    delay(160);
+                    delay(16);
                     MotorL(-255);
                     MotorR(-255);
-                    delay(250);
+                    delay(25);
                     rotacao = 1; //gira no sentido anti-horário quando busca o oponente
                     SenDi(); //distancia
                     SenLi(); //linha
@@ -248,10 +248,10 @@ void loop() {
                     //by Marco Przybysz
                     MotorL(255);
                     MotorR(255);
-                    delay(100);
+                    delay(10);
                     MotorL(255);
                     MotorR(-128);
-                    delay(200);
+                    delay(20);
                     rotacao = -1; //gira no sentido horario quando busca o oponente
                     SenDi(); //distancia
                     SenLi(); //linha
@@ -261,10 +261,10 @@ void loop() {
                     //espelhamento do 12
                     MotorL(255);
                     MotorR(255);
-                    delay(100);
+                    delay(10);
                     MotorL(-128);
                     MotorR(255);
-                    delay(200);
+                    delay(20);
                     rotacao = 1; //gira no sentido horario quando busca o oponente
                     SenDi(); //distancia
                     SenLi(); //linha
@@ -276,7 +276,7 @@ void loop() {
                     MotorL(255);
                     MotorR(255);
                     rotacao = -1; //gira no sentido horario quando busca o oponente
-                    delay(300);
+                    delay(30);
                     break;
 
                case 15: //B3: the ultimate suicidal robot
@@ -285,7 +285,7 @@ void loop() {
                     MotorL(255);
                     MotorR(255);
                     rotacao = 1; //gira no sentido anti-horário quando busca o oponente
-                    delay(300);
+                    delay(30);
                     break;
           }
           //a ideia é que depois da parte inicial da estratégia, a movimentação

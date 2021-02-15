@@ -176,7 +176,7 @@ void loop() {
   if(start==1){                           //se foi ligado o rb6o de movimenta
     digitalWrite(LED, HIGH);              //liga o LED  
     infR = digitalRead(lineR);
-    infL = digitalRead(lineR);
+    infL = digitalRead(lineL);
     switch (readDIP()) //Leitura da chave DIP por meio da função readDIP
     {
       case 15: //Chave DIP 1111 (Estratégia Padrão)
@@ -374,7 +374,7 @@ void loop() {
         else if (frontL == 0 && frontR == 1)
         { //Adversário detectado na direita (Virar para a direita)
           MotorL(255);
-          MotorR(-128)
+          MotorR(-128);
         }
         //Adversário não encontrado, checar se o mini não está saindo do dojô
         else if (infL == 1 && infR == 0)

@@ -175,8 +175,8 @@ void loop() {
   start = digitalRead(microST);           //verifica se o micro-start foi ligadopleo controle do juiz, iniciando luta
   if(start==1){                           //se foi ligado o rb6o de movimenta
     digitalWrite(LED, HIGH);              //liga o LED  
-    infR = digitalRead(lineR);
-    infL = digitalRead(lineL);
+    infR = analogRead(lineR);             //O output do sensor de linha é do tipo analógico
+    infL = analogRead(lineL);             //O output do sensor de linha é do tipo analógico
     switch (readDIP()) //Leitura da chave DIP por meio da função readDIP
     {
       case 15: //Chave DIP 1111 (Estratégia Padrão)
@@ -210,27 +210,27 @@ void loop() {
           //Avançar
           MotorL(255);
           MotorR(255);
-          delay(200);
+          delay(20);
           //Girar
           MotorL(255);
           MotorR(-128);
-          delay(300);
+          delay(30);
           aberturaFoiFeita = true;
         }
-        if(frontL == 1 && frontR == 1){        //Adversário detectado na frente do robô (Seguir em frente)
+        if(frontL < /*Limite*/ && frontR < /*Limite*/){        //Adversário detectado na frente do robô (Seguir em frente)
           MotorL(255);
           MotorR(255);
         }
-        else if(frontL == 1 && frontR == 0){   //Adversário detectado na esquerda (Virar para a esquerda)
+        else if(frontL < /*Limite*/ && frontR > /*Limite*/){   //Adversário detectado na esquerda (Virar para a esquerda)
           MotorL(-128);
           MotorR(255);
         }
-        else if(frontL == 0 && frontR == 1){   //Adversário detectado na direita (Virar para a direita)
+        else if(frontL > /*Limite*/ && frontR < /*Limite*/){   //Adversário detectado na direita (Virar para a direita)
           MotorL(255);
           MotorR(-128);
         }
         //Adversário não encontrado, checar se o mini não está saindo do dojô
-        else if(infL == 1 && infR == 0){       //Linha do dojô detectada na esquerda
+        else if(infL < /*Limite*/ && infR > /*Limite*/){       //Linha do dojô detectada na esquerda
           MotorL(-255);
           MotorR(-255);
           delay(300);
@@ -239,7 +239,7 @@ void loop() {
           MotorR(-255);
           delay(400);
         }
-         else if(infL == 0 && infR == 1){      //Linha do dojô detectada na direita
+         else if(infL > /*Limite*/ && infR < /*Limite*/){      //Linha do dojô detectada na direita
           MotorL(-255);
           MotorR(-255);
           delay(300);
@@ -248,7 +248,7 @@ void loop() {
           MotorR(-255);
           delay(400);
         }
-         else if(infL == 1 && infR == 1){      //Linha do dojô detectada pelos dois sensores
+         else if(infL < /*Limite*/ && infR < /*Limite*/){      //Linha do dojô detectada pelos dois sensores
           MotorL(-255);
           MotorR(-255);
           delay(300);
@@ -354,11 +354,15 @@ void loop() {
           //Recuar
           MotorL(-255);
           MotorR(-255);
-          delay(100);
+          delay(20);
           //Girar
           MotorL(-255);
           MotorR(-120);
           delay(200);
+          //Recuar
+          MotorL(-255);
+          MotorR(-255);
+          delay(20);
           aberturaFoiFeita = true;
         }
         if (frontL == 1 && frontR == 1)

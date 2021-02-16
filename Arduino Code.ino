@@ -180,7 +180,7 @@ void loop() {
     switch (readDIP()) //Leitura da chave DIP por meio da função readDIP
     {
       case 15: //Chave DIP 1111 (Estratégia Padrão)
-        if ((infR==0)&&(infL==0)){            //caso os sensores IR inferiores não detectem a linha 
+        if (infR > /*Limite*/ && infL > /*Limite*/){            //caso os sensores IR inferiores não detectem a linha 
           frontR = digitalRead(distR);        //realiza a leitura dos 2 sensores frontais
           frontL = digitalRead(distL);
           if((frontR==1)&&(frontL==1)){        //se os dois sensores frontais detectam o adversário
@@ -265,7 +265,7 @@ void loop() {
       case 13://Chave DIP 1101 (Pe D Valsa) (Inclinação 4)
               //Aqui ele luta com movimento de curva e acelerações mais suaves para pegar o oponente na surpresa
 
-        if ((infR == 0) && (infL == 0))
+        if (infR > /*Limite*/ && infL > /*Limite*/)
         {                              //caso os sensores IR inferiores não detectem a linha
           frontR = digitalRead(distR); //realiza a leitura dos 2 sensores frontais
           frontL = digitalRead(distL);
@@ -310,7 +310,7 @@ void loop() {
         break;
       case 11://Chave DIP 1011 (Dibraldinho) (Inclinação 1) (Meme)
               //Esse só foge dando voltas antihorárias na arena
-        if (infR == 0)
+        if (infR > /*Limite*/)
         { //caso os sensor IR da esquerda n detecte a linha
 
           MotorL(160); //ele ta livre pra dibrar, andando em circulos

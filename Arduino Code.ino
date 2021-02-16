@@ -38,6 +38,7 @@
 void MotorL(int pwm); // left motor / motor esquerdo / motor izquierdo
 void MotorR(int pwm); // right motor / motor direito / motor derecho
 int readDIP(); // read DIP switch / ler chave DIP / leer el interruptor DIP
+int calibrateLine();
 /*******FUNCTIONS - END*******/
  
 /*******VARIÁVEIS*******/
@@ -170,6 +171,11 @@ int readDIP(){
     n|= (1<<3); //Bit shift (0001 --> 1000), ou seja, n =  n + 8
   return n; // Valor retornado de n
 }
+
+/*ACERCA DOS SENSORES DE LINHA*/
+//Os sensores de linha retornam um valor de 0 à 1000
+//Quanto mais próximo de 0, mais a refletância -> superfície clara
+//Assim, para detectar a linha do dojô -> infR < Limite e infL < Limite
 
 void loop() {
   start = digitalRead(microST);           //verifica se o micro-start foi ligadopleo controle do juiz, iniciando luta
@@ -331,12 +337,12 @@ void loop() {
           MotorL(255); //o robô avança puto na direção do adversário
           MotorR(255);
         }
-        else if ((frontR == 0) && (frontL == 1) && (infL == 0))
+        else if ((frontR == 0) && (frontL == 1) && (infL > /*Limite*/))
         {              //caso o sensor frontal da direita pare de detectar o adversário e o sensor da linha esquerda nao apite
           MotorL(120); //o robô reduz a velocidade do motor esquerdo e
           MotorR(255); //gira o motor direito tentando identificar novamente o adversário
         }
-        else if ((frontR == 1) && (frontL == 0) && (infR == 0))
+        else if ((frontR == 1) && (frontL == 0) && (infR > /*Limite*/))
         {              //caso o sensor frontal da direita pare de detectar o adversário e o sensor da linha direita nao apite
           MotorR(120); //o robô reduz a velocidade do motor direito e
           MotorL(255); //gira o motor esquerdo tentando identificar novamente o adversário
@@ -381,7 +387,7 @@ void loop() {
           MotorR(-128);
         }
         //Adversário não encontrado, checar se o mini não está saindo do dojô
-        else if (infL == 1 && infR == 0)
+        else if (infL < /*Limite*/ && infR > /*Limite*/)
         { //Linha do dojô detectada na esquerda
           MotorL(-255);
           MotorR(-255);
@@ -391,7 +397,7 @@ void loop() {
           MotorR(-255);
           delay(400);
         }
-        else if (infL == 0 && infR == 1)
+        else if (infL > /*Limite*/ && infR < /*Limite*/)
         { //Linha do dojô detectada na direita
           MotorL(-255);
           MotorR(-255);
@@ -401,7 +407,7 @@ void loop() {
           MotorR(-255);
           delay(400);
         }
-        else if (infL == 1 && infR == 1)
+        else if (infL < /*Limite*/ && infR < /*Limite*/)
         { //Linha do dojô detectada pelos dois sensores
           MotorL(-255);
           MotorR(-255);
@@ -423,11 +429,11 @@ void loop() {
     digitalWrite(LED, LOW);                 // LED desligado 
     MotorL(0);                              // motores parados 
     MotorR(0);                              // depois cofere o menor valor detectado quando o sensor esta detectando a cor preta
-    infR = digitalRead(lineR);              // lê o valor atual do sensor de linha
+    infR = analogRead(lineR);              // lê o valor atual do sensor de linha
     if(infR<infR_min){
       infR_min=infR;
     }
-    infL = digitalRead(lineL);
+    infL = analogRead(lineL);
     if(infL<infL_min){
       infL_min=infL;
     }

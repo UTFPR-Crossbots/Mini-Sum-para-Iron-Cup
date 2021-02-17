@@ -181,10 +181,10 @@ void loop() {
                     //a buscar o oponente
                     MotorL(255);
                     MotorR(255);
-                    delay(16);
+                    delay(6);
                     MotorL(-255);
                     MotorR(-255);
-                    delay(25);
+                    delay(9);
                     rotacao = -1; //gira no sentido horario quando busca o oponente
                     SenDi(); //distancia
                     SenLi(); //linha
@@ -195,7 +195,7 @@ void loop() {
                     //robô faz uma curva em 45° antes de começar a buscar o oponente
                     MotorL(64);
                     MotorR(255);
-                    delay(15);
+                    delay(5);
                     rotacao = -1; //gira no sentido horario quando busca o oponente
                     SenDi(); //distancia
                     SenLi(); //linha
@@ -225,7 +225,7 @@ void loop() {
                     //espelhamento da 7
                     MotorL(255);
                     MotorR(64);
-                    delay(15);
+                    delay(5);
                     rotacao = 1; //gira no sentido anti-horário quando busca o oponente
                     SenDi(); //distancia
                     SenLi(); //linha
@@ -235,10 +235,10 @@ void loop() {
                     //espelhamento da 6
                     MotorL(255);
                     MotorR(255);
-                    delay(16);
+                    delay(7);
                     MotorL(-255);
                     MotorR(-255);
-                    delay(25);
+                    delay(8);
                     rotacao = 1; //gira no sentido anti-horário quando busca o oponente
                     SenDi(); //distancia
                     SenLi(); //linha
@@ -248,10 +248,10 @@ void loop() {
                     //by Marco Przybysz
                     MotorL(255);
                     MotorR(255);
-                    delay(10);
+                    delay(4);
                     MotorL(255);
                     MotorR(-128);
-                    delay(20);
+                    delay(8);
                     rotacao = -1; //gira no sentido horario quando busca o oponente
                     SenDi(); //distancia
                     SenLi(); //linha
@@ -261,10 +261,10 @@ void loop() {
                     //espelhamento do 12
                     MotorL(255);
                     MotorR(255);
-                    delay(10);
+                    delay(4);
                     MotorL(-128);
                     MotorR(255);
-                    delay(20);
+                    delay(8);
                     rotacao = 1; //gira no sentido horario quando busca o oponente
                     SenDi(); //distancia
                     SenLi(); //linha
@@ -276,7 +276,7 @@ void loop() {
                     MotorL(255);
                     MotorR(255);
                     rotacao = -1; //gira no sentido horario quando busca o oponente
-                    delay(50);
+                    delay(16);
                     break;
 
                case 15: //B3: the ultimate suicidal robot
@@ -285,7 +285,7 @@ void loop() {
                     MotorL(255);
                     MotorR(255);
                     rotacao = 1; //gira no sentido anti-horário quando busca o oponente
-                    delay(50);
+                    delay(16);
                     break;
           }
           //a ideia é que depois da parte inicial da estratégia, a movimentação
@@ -297,15 +297,15 @@ void loop() {
                          if(line == 3){ //ré caso tenha linha dos dois lados
                               MotorL(-255);
                               MotorR(-255);
-                              delay(20);
+                              delay(8);
                          }else if(line == 2){ //vai para direita em ré
                               MotorL(-128);
                               MotorR(-255);
-                              delay(20);
+                              delay(8);
                          }else{ //vai para a esquerda em ré
                               MotorL(-255);
                               MotorR(-128);
-                              delay(20);
+                              delay(8);
                          }
                     //caso o robô esteja na área certa...
                     //procura o adversário girando no sentido anti-horário
@@ -335,15 +335,15 @@ void loop() {
                          if(line == 3){ //ré caso tenha linha dos dois lados
                               MotorL(-160);
                               MotorR(-160);
-                              delay(20);
+                              delay(8);
                          }else if(line == 2){ //vai para direita em ré
                               MotorL(-80);
                               MotorR(-160);
-                              delay(20);
+                              delay(8);
                          }else{ //vai para a esquerda em ré
                               MotorL(-160);
                               MotorR(-80);
-                              delay(20);
+                              delay(8);
                          }
                     //caso o robô esteja na área certa...
                     //procura o adversário girando no sentido anti-horário
@@ -375,21 +375,21 @@ void loop() {
                          if(line == 3){ //ré caso tenha linha dos dois lados
                               MotorL(-255);
                               MotorR(-255);
-                              delay(60);
+                              delay(20);
                          }else if(line == 2){ //vai para direita em ré
                               MotorL(-255);
                               MotorR(-255);
-                              delay(40);
+                              delay(13);
                               MotorL(-128);
                               MotorR(-255);
-                              delay(30);
+                              delay(8);
                          }else{ //vai para a esquerda em ré
                               MotorL(-255);
                               MotorR(-255);
-                              delay(40);
+                              delay(13);
                               MotorL(-255);
                               MotorR(-128);
-                              delay(30);
+                              delay(8);
                          }
                     //caso o robô esteja na área certa...
                     //procura o adversário girando no sentido anti-horário

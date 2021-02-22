@@ -270,11 +270,11 @@ void loop() {
          else if(infL < infL_min && infR < infR_min){      //Linha do dojô detectada pelos dois sensores
           MotorL(-255);
           MotorR(-255);
-          delay(30);
+          delay(300);
           //Giro para sair da beirada
           MotorL(255);
           MotorR(-255);
-          delay(40);
+          delay(400);
         }
         else{                                  //Nenhuma das condições anteriores foram satisfeitas (Andar para frente)
           MotorL(255);

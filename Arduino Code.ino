@@ -252,29 +252,29 @@ void loop() {
         else if(infL < infL_min && infR > infR_min){       //Linha do dojô detectada na esquerda
           MotorL(-255);
           MotorR(-255);
-          delay(300);
+          delay(30);
           //Giro para sair da beirada
           MotorL(255);
           MotorR(-255);
-          delay(400);
+          delay(40);
         }
          else if(infL > infL_min && infR < infR_min){      //Linha do dojô detectada na direita
           MotorL(-255);
           MotorR(-255);
-          delay(300);
+          delay(30);
           //Giro para sair da beirada
           MotorL(-255);
           MotorR(-255);
-          delay(400);
+          delay(40);
         }
          else if(infL < infL_min && infR < infR_min){      //Linha do dojô detectada pelos dois sensores
           MotorL(-255);
           MotorR(-255);
-          delay(300);
+          delay(30);
           //Giro para sair da beirada
           MotorL(255);
           MotorR(-255);
-          delay(400);
+          delay(40);
         }
         else{                                  //Nenhuma das condições anteriores foram satisfeitas (Andar para frente)
           MotorL(255);

@@ -88,7 +88,7 @@ void setup() {
 //line 1 é linha na esquerda
 //line 2 é linha na direita
 //line 3 é linha dos dois lados
-int senliL, senliR, sendiL, sendiR, line = 0, blPart = 700, rotacao = 1, strat = 0;
+int senliL, senliR, sendiL, sendiR, line = 0, blPart, rotacao = 1, strat = 0, valorDIP = 15;
 
 //obtem o valor dos dois sensores de distancia
 void SenDi(){
@@ -131,10 +131,11 @@ int readDIP (){
 }
 
 void loop() {
+     valorDIP = readDIP();
      //caso  o botão para iniciar seja apertado
      if((digitalRead(microST)) == 1){
           digitalWrite(LED, HIGH);
-          switch (readDIP()) {
+          switch (valorDIP) {
                case 0:
                     break;
 
@@ -181,10 +182,10 @@ void loop() {
                     //a buscar o oponente
                     MotorL(255);
                     MotorR(255);
-                    delay(20);
+                    delay(6);
                     MotorL(-255);
                     MotorR(-255);
-                    delay(30);
+                    delay(9);
                     rotacao = -1; //gira no sentido horario quando busca o oponente
                     SenDi(); //distancia
                     SenLi(); //linha
@@ -195,7 +196,7 @@ void loop() {
                     //robô faz uma curva em 45° antes de começar a buscar o oponente
                     MotorL(64);
                     MotorR(255);
-                    delay(15);
+                    delay(5);
                     rotacao = -1; //gira no sentido horario quando busca o oponente
                     SenDi(); //distancia
                     SenLi(); //linha
@@ -225,7 +226,7 @@ void loop() {
                     //espelhamento da 7
                     MotorL(255);
                     MotorR(64);
-                    delay(15);
+                    delay(5);
                     rotacao = 1; //gira no sentido anti-horário quando busca o oponente
                     SenDi(); //distancia
                     SenLi(); //linha
@@ -235,10 +236,10 @@ void loop() {
                     //espelhamento da 6
                     MotorL(255);
                     MotorR(255);
-                    delay(20);
+                    delay(7);
                     MotorL(-255);
                     MotorR(-255);
-                    delay(25);
+                    delay(8);
                     rotacao = 1; //gira no sentido anti-horário quando busca o oponente
                     SenDi(); //distancia
                     SenLi(); //linha
@@ -248,10 +249,10 @@ void loop() {
                     //by Marco Przybysz
                     MotorL(255);
                     MotorR(255);
-                    delay(10);
+                    delay(4);
                     MotorL(255);
                     MotorR(-128);
-                    delay(25);
+                    delay(8);
                     rotacao = -1; //gira no sentido horario quando busca o oponente
                     SenDi(); //distancia
                     SenLi(); //linha
@@ -261,10 +262,10 @@ void loop() {
                     //espelhamento do 12
                     MotorL(255);
                     MotorR(255);
-                    delay(10);
+                    delay(4);
                     MotorL(-128);
                     MotorR(255);
-                    delay(25);
+                    delay(8);
                     rotacao = 1; //gira no sentido horario quando busca o oponente
                     SenDi(); //distancia
                     SenLi(); //linha
@@ -276,7 +277,7 @@ void loop() {
                     MotorL(255);
                     MotorR(255);
                     rotacao = -1; //gira no sentido horario quando busca o oponente
-                    delay(50);
+                    delay(16);
                     break;
 
                case 15: //B3: the ultimate suicidal robot
@@ -285,7 +286,7 @@ void loop() {
                     MotorL(255);
                     MotorR(255);
                     rotacao = 1; //gira no sentido anti-horário quando busca o oponente
-                    delay(50);
+                    delay(16);
                     break;
           }
           //a ideia é que depois da parte inicial da estratégia, a movimentação
@@ -432,7 +433,12 @@ void loop() {
      senliL = digitalRead(lineL);
      senliR = digitalRead(lineR);
      //define o valor no sensor de linha na parte que o robô pode andar
-
+     if(senliL <= senliR){
+          blPart = senliR;
+     }else{
+          blPart = senliL;
+     }
+     blPart = blPart - 100;
 
 }
 

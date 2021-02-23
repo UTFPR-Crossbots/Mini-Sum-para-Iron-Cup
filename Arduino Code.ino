@@ -45,8 +45,8 @@ int calibrateLine();
 int start;            //Variáveis para indicar se o robô deve ser acionado ou permanecer parado
 int frontR,frontL;    //Variáveis para indicar o valor mais recente retornado pelo sensor frontal de direita e da esquerda
 int infR,infL;        //Variáveis para indicar o valor mais recente retornado pelo sensor inferior de direita e da esquerda
-int infR_min;     //Variáveis para definir o valor mínimo aceitável pelo sensor de linha de direita
-int infL_min;     //Variáveis para definir o valor mínimo aceitável pelo sensor de linha de direita
+int infR_min = 850;   //(Valor do piso preto)Variáveis para definir o valor mínimo aceitável pelo sensor de linha de direita
+int infL_min = 850;   //(Valor do piso preto)Variáveis para definir o valor mínimo aceitável pelo sensor de linha de direita
 bool aberturaFoiFeita = false; //Variável para identificar se o movimento de abertura foi feito
 
 void setup() {
@@ -91,9 +91,9 @@ void setup() {
   MotorR(0); // right motor stopped / motor direito parado / motor derecho parado 
   /*************INITIAL CONDITIONS - END*************/
 
-  //Calibração da linha//
+  /*Calibração da linha//
   infL_min = calibrateLine();
-  infR_min = calibrateLine();
+  infR_min = calibrateLine();*/
 }
  
 
@@ -436,19 +436,50 @@ void loop() {
           MotorR(255);
         }
         break;
+      case 8: //Caso para testar os valores mínimos dos sensores de refletância
+        MotorL(100);
+        MotorR(100);
+        if(infL < infL_min && infR < infR_min){ //Se os dois sensores encontrarem valores menores que 850(LINHA A FRENTE)
+          MotorL(-150);
+          MotorR(-150);
+          delay(200);
+        }
+        else if (infL > infL_min && infR < infR_min)
+        { //Linha do dojô detectada na direita
+          MotorL(-150);
+          MotorR(-150);
+          delay(300);
+          //Giro para sair da beirada
+          MotorL(150);
+          MotorR(-255);
+          delay(400);
+        }
+        else if (infL < infL_min && infR > infR_min)
+        { //Linha do dojô detectada na esquerda
+          MotorL(-150);
+          MotorR(-150);
+          delay(300);
+          //Giro para sair da beirada
+          MotorL(150);
+          MotorR(-150);
+          delay(400);
+        }
+       
+
+        break;
     }
   }
   else{                                     // assume que o robô deve ficar parado e está sob piso preto
     digitalWrite(LED, LOW);                 // LED desligado 
     MotorL(0);                              // motores parados 
     MotorR(0);                              // depois cofere o menor valor detectado quando o sensor esta detectando a cor preta
-    infR = analogRead(lineR);              // lê o valor atual do sensor de linha
+    /*infR = analogRead(lineR);              // lê o valor atual do sensor de linha
     if(infR<infR_min){
       infR_min=infR;
     }
     infL = analogRead(lineL);
     if(infL<infL_min){
       infL_min=infL;
-    }
+    }*/
   }
 }

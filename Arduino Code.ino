@@ -464,8 +464,288 @@ void loop() {
           MotorR(-150);
           delay(40);
         }
-       
-
+        break;
+      /*A partir desse ponto, pretende-se testar alguns valores de delay para o Uzinho invertido
+      Os delays podem ser longos ou curtos e estarem na abertura ou rotina padrão
+      Estratégia 7 - Abertura = curta ; Rotina padrão = longa
+      Estratégia 6 - Abertura = longa ; Rotina padrão = curta
+      Estratégia 5 - Abertura = longa ; Rotina padrão = longa
+      Estratégia 4 - Abertura = curta ; Rotina padrão = curta*/
+      case 7: //Chave DIP 0111 - Abertura -> 16ms - Demais -> 50ms e 60ms
+        if (aberturaFoiFeita = false)
+        { //Verifica se o movimento de abertura foi realizado
+          //Recuar
+          MotorL(-255);
+          MotorR(-255);
+          delay(16);
+          //Girar
+          MotorL(-255);
+          MotorR(-120);
+          delay(16);
+          //Recuar
+          MotorL(-255);
+          MotorR(-255);
+          delay(16);
+          aberturaFoiFeita = true;
+        }
+        if (frontL == 1 && frontR == 1)
+        { //Adversário detectado na frente do robô (Seguir em frente)
+          MotorL(255);
+          MotorR(255);
+        }
+        else if (frontL == 1 && frontR == 0)
+        { //Adversário detectado na esquerda (Virar para a esquerda)
+          MotorL(-128);
+          MotorR(255);
+        }
+        else if (frontL == 0 && frontR == 1)
+        { //Adversário detectado na direita (Virar para a direita)
+          MotorL(255);
+          MotorR(-128);
+        }
+        //Adversário não encontrado, checar se o mini não está saindo do dojô
+        else if (infL < infL_min && infR > infR_min)
+        { //Linha do dojô detectada na esquerda
+          MotorL(-255);
+          MotorR(-255);
+          delay(50);
+          //Giro para sair da beirada
+          MotorL(255);
+          MotorR(-255);
+          delay(60);
+        }
+        else if (infL > infL_min && infR < infR_min)
+        { //Linha do dojô detectada na direita
+          MotorL(-255);
+          MotorR(-255);
+          delay(50);
+          //Giro para sair da beirada
+          MotorL(-255);
+          MotorR(-255);
+          delay(60);
+        }
+        else if (infL < infL_min && infR < infR_min)
+        { //Linha do dojô detectada pelos dois sensores
+          MotorL(-255);
+          MotorR(-255);
+          delay(50);
+          //Giro para sair da beirada
+          MotorL(255);
+          MotorR(-255);
+          delay(60);
+        }
+        else
+        { //Nenhuma das condições anteriores foram satisfeitas (Andar para frente)
+          MotorL(255);
+          MotorR(255);
+        } 
+        break;
+      case 6: //Chave DIP 0110 - Abertura -> 50ms - Demais -> 16ms e 26ms
+        if (aberturaFoiFeita = false)
+        { //Verifica se o movimento de abertura foi realizado
+          //Recuar
+          MotorL(-255);
+          MotorR(-255);
+          delay(50);
+          //Girar
+          MotorL(-255);
+          MotorR(-120);
+          delay(50);
+          //Recuar
+          MotorL(-255);
+          MotorR(-255);
+          delay(50);
+          aberturaFoiFeita = true;
+        }
+        if (frontL == 1 && frontR == 1)
+        { //Adversário detectado na frente do robô (Seguir em frente)
+          MotorL(255);
+          MotorR(255);
+        }
+        else if (frontL == 1 && frontR == 0)
+        { //Adversário detectado na esquerda (Virar para a esquerda)
+          MotorL(-128);
+          MotorR(255);
+        }
+        else if (frontL == 0 && frontR == 1)
+        { //Adversário detectado na direita (Virar para a direita)
+          MotorL(255);
+          MotorR(-128);
+        }
+        //Adversário não encontrado, checar se o mini não está saindo do dojô
+        else if (infL < infL_min && infR > infR_min)
+        { //Linha do dojô detectada na esquerda
+          MotorL(-255);
+          MotorR(-255);
+          delay(16);
+          //Giro para sair da beirada
+          MotorL(255);
+          MotorR(-255);
+          delay(26);
+        }
+        else if (infL > infL_min && infR < infR_min)
+        { //Linha do dojô detectada na direita
+          MotorL(-255);
+          MotorR(-255);
+          delay(16);
+          //Giro para sair da beirada
+          MotorL(-255);
+          MotorR(-255);
+          delay(26);
+        }
+        else if (infL < infL_min && infR < infR_min)
+        { //Linha do dojô detectada pelos dois sensores
+          MotorL(-255);
+          MotorR(-255);
+          delay(16);
+          //Giro para sair da beirada
+          MotorL(255);
+          MotorR(-255);
+          delay(26);
+        }
+        else
+        { //Nenhuma das condições anteriores foram satisfeitas (Andar para frente)
+          MotorL(255);
+          MotorR(255);
+        }
+        break;
+      case 5: //Chave DIP 0101 - Abertura -> 50ms - Demais -> 50ms e 60ms
+        if (aberturaFoiFeita = false)
+        { //Verifica se o movimento de abertura foi realizado
+          //Recuar
+          MotorL(-255);
+          MotorR(-255);
+          delay(50);
+          //Girar
+          MotorL(-255);
+          MotorR(-120);
+          delay(50);
+          //Recuar
+          MotorL(-255);
+          MotorR(-255);
+          delay(50);
+          aberturaFoiFeita = true;
+        }
+        if (frontL == 1 && frontR == 1)
+        { //Adversário detectado na frente do robô (Seguir em frente)
+          MotorL(255);
+          MotorR(255);
+        }
+        else if (frontL == 1 && frontR == 0)
+        { //Adversário detectado na esquerda (Virar para a esquerda)
+          MotorL(-128);
+          MotorR(255);
+        }
+        else if (frontL == 0 && frontR == 1)
+        { //Adversário detectado na direita (Virar para a direita)
+          MotorL(255);
+          MotorR(-128);
+        }
+        //Adversário não encontrado, checar se o mini não está saindo do dojô
+        else if (infL < infL_min && infR > infR_min)
+        { //Linha do dojô detectada na esquerda
+          MotorL(-255);
+          MotorR(-255);
+          delay(50);
+          //Giro para sair da beirada
+          MotorL(255);
+          MotorR(-255);
+          delay(60);
+        }
+        else if (infL > infL_min && infR < infR_min)
+        { //Linha do dojô detectada na direita
+          MotorL(-255);
+          MotorR(-255);
+          delay(50);
+          //Giro para sair da beirada
+          MotorL(-255);
+          MotorR(-255);
+          delay(60);
+        }
+        else if (infL < infL_min && infR < infR_min)
+        { //Linha do dojô detectada pelos dois sensores
+          MotorL(-255);
+          MotorR(-255);
+          delay(50);
+          //Giro para sair da beirada
+          MotorL(255);
+          MotorR(-255);
+          delay(60);
+        }
+        else
+        { //Nenhuma das condições anteriores foram satisfeitas (Andar para frente)
+          MotorL(255);
+          MotorR(255);
+        }
+        break
+      case 4: //Chave DIP 0100 - Abertura -> 16ms - Demais -> 16ms e 26ms
+        if (aberturaFoiFeita = false)
+        { //Verifica se o movimento de abertura foi realizado
+          //Recuar
+          MotorL(-255);
+          MotorR(-255);
+          delay(16);
+          //Girar
+          MotorL(-255);
+          MotorR(-120);
+          delay(16);
+          //Recuar
+          MotorL(-255);
+          MotorR(-255);
+          delay(16);
+          aberturaFoiFeita = true;
+        }
+        if (frontL == 1 && frontR == 1)
+        { //Adversário detectado na frente do robô (Seguir em frente)
+          MotorL(255);
+          MotorR(255);
+        }
+        else if (frontL == 1 && frontR == 0)
+        { //Adversário detectado na esquerda (Virar para a esquerda)
+          MotorL(-128);
+          MotorR(255);
+        }
+        else if (frontL == 0 && frontR == 1)
+        { //Adversário detectado na direita (Virar para a direita)
+          MotorL(255);
+          MotorR(-128);
+        }
+        //Adversário não encontrado, checar se o mini não está saindo do dojô
+        else if (infL < infL_min && infR > infR_min)
+        { //Linha do dojô detectada na esquerda
+          MotorL(-255);
+          MotorR(-255);
+          delay(16);
+          //Giro para sair da beirada
+          MotorL(255);
+          MotorR(-255);
+          delay(26);
+        }
+        else if (infL > infL_min && infR < infR_min)
+        { //Linha do dojô detectada na direita
+          MotorL(-255);
+          MotorR(-255);
+          delay(16);
+          //Giro para sair da beirada
+          MotorL(-255);
+          MotorR(-255);
+          delay(26);
+        }
+        else if (infL < infL_min && infR < infR_min)
+        { //Linha do dojô detectada pelos dois sensores
+          MotorL(-255);
+          MotorR(-255);
+          delay(16);
+          //Giro para sair da beirada
+          MotorL(255);
+          MotorR(-255);
+          delay(26);
+        }
+        else
+        { //Nenhuma das condições anteriores foram satisfeitas (Andar para frente)
+          MotorL(255);
+          MotorR(255);
+        }
         break;
     }
   }

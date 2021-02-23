@@ -199,7 +199,7 @@ void loop() {
     switch (readDIP()) //Leitura da chave DIP por meio da função readDIP
     {
       case 15: //Chave DIP 1111 (Estratégia Padrão)
-        if (infR > infR_min && infL > infL_min){            //caso os sensores IR inferiores não detectem a linha 
+        if (infR >= infR_min && infL >= infL_min){            //caso os sensores IR inferiores não detectem a linha 
           frontR = digitalRead(distR);        //realiza a leitura dos 2 sensores frontais
           frontL = digitalRead(distL);
           if((frontR==1)&&(frontL==1)){        //se os dois sensores frontais detectam o adversário

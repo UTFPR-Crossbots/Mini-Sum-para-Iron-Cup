@@ -136,7 +136,19 @@ void loop() {
      if((digitalRead(microST)) == 1){
           digitalWrite(LED, HIGH);
           switch (valorDIP) {
-               case 0:
+               case 0: //B5: teste
+                    //o objetivo é verificar se o robô esta passando pelo switch
+                    //corretamente
+                    while(line == 0){
+                         MotorL(64);
+                         MotorR(64);
+                    }
+                    MotorL(-64);
+                    MotorR(-64);
+                    delay(10);
+                    MotorL(-64);
+                    MotorR(-64);
+                    delay(100);
                     break;
 
                case 1:

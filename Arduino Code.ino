@@ -142,6 +142,7 @@ void loop() {
                     while(line == 0){
                          MotorL(64);
                          MotorR(64);
+                         SenLi();
                     }
                     MotorL(-64);
                     MotorR(-64);
@@ -450,7 +451,7 @@ void loop() {
      }else{
           blPart = senliL;
      }
-     blPart = blPart - 100;
+     blPart = blPart - 150;
 
 }
 

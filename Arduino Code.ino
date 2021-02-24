@@ -227,13 +227,13 @@ void loop() {
       case 14: //Chave DIP 1110 (Estratégia - A2 - Abertura em U)
         if(aberturaFoiFeita = false){          //Verifica se o movimento de abertura foi realizado
           //Avançar
-          MotorL(255);
-          MotorR(255);
-          delay(20);
+          MotorL(128);
+          MotorR(128);
+          delay(10);
           //Girar
-          MotorL(255);
-          MotorR(-128);
-          delay(30);
+          MotorL(128);
+          MotorR(-64);
+          delay(20);
           aberturaFoiFeita = true;
         }
         if(frontL == 1 && frontR == 1){        //Adversário detectado na frente do robô (Seguir em frente)
@@ -250,35 +250,35 @@ void loop() {
         }
         //Adversário não encontrado, checar se o mini não está saindo do dojô
         else if(infL <= infL_min && infR >= infR_min){       //Linha do dojô detectada na esquerda
-          MotorL(-255);
-          MotorR(-255);
-          delay(30);
+          MotorL(-200);
+          MotorR(-200);
+          delay(20);
           //Giro para sair da beirada
-          MotorL(255);
-          MotorR(-255);
-          delay(40);
+          MotorL(200);
+          MotorR(-200);
+          delay(30);
         }
          else if(infL >= infL_min && infR <= infR_min){      //Linha do dojô detectada na direita
-          MotorL(-255);
-          MotorR(-255);
-          delay(30);
+          MotorL(-200);
+          MotorR(-200);
+          delay(20);
           //Giro para sair da beirada
-          MotorL(-255);
-          MotorR(-255);
-          delay(40);
+          MotorL(-200);
+          MotorR(-200);
+          delay(30);
         }
          else if(infL <= infL_min && infR <= infR_min){      //Linha do dojô detectada pelos dois sensores
-          MotorL(-255);
-          MotorR(-255);
-          delay(30);
+          MotorL(-200);
+          MotorR(-200);
+          delay(20);
           //Giro para sair da beirada
-          MotorL(255);
-          MotorR(-255);
-          delay(40);
+          MotorL(200);
+          MotorR(-200);
+          delay(30);
         }
         else{                                  //Nenhuma das condições anteriores foram satisfeitas (Andar para frente)
-          MotorL(255);
-          MotorR(255);
+          MotorL(128);
+          MotorR(128);
         }
         break;
       case 13://Chave DIP 1101 (Pe D Valsa) (Inclinação 4)

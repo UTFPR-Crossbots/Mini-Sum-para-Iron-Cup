@@ -437,30 +437,30 @@ void loop() {
         }
         break;
       case 8: //Chave DIP: 1000 - Caso para testar os valores mínimos dos sensores de refletância
-        MotorL(100);
-        MotorR(100);
+        MotorL(50);
+        MotorR(50);
         if(infL < infL_min && infR < infR_min){ //Se os dois sensores encontrarem valores menores que 850(LINHA A FRENTE)
-          MotorL(-150);
-          MotorR(-150);
+          MotorL(-100);
+          MotorR(-100);
           delay(20);
         }
         else if (infL > infL_min && infR < infR_min)
         { //Linha do dojô detectada na direita
-          MotorL(-150);
-          MotorR(-150);
+          MotorL(-100);
+          MotorR(-100);
           delay(30);
           //Giro para sair da beirada
-          MotorL(150);
-          MotorR(-255);
+          MotorL(50);
+          MotorR(-150);
           delay(40);
         }
         else if (infL < infL_min && infR > infR_min)
         { //Linha do dojô detectada na esquerda
-          MotorL(-150);
-          MotorR(-150);
+          MotorL(-100);
+          MotorR(-100);
           delay(30);
           //Giro para sair da beirada
-          MotorL(150);
+          MotorL(50);
           MotorR(-150);
           delay(40);
         }

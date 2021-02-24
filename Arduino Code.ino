@@ -677,7 +677,7 @@ void loop() {
           MotorL(255);
           MotorR(255);
         }
-        break
+        break;
       case 4: //Chave DIP 0100 - Abertura -> 16ms - Demais -> 16ms e 26ms
         if (aberturaFoiFeita = false)
         { //Verifica se o movimento de abertura foi realizado

@@ -88,7 +88,7 @@ void setup() {
 //line 1 é linha na esquerda
 //line 2 é linha na direita
 //line 3 é linha dos dois lados
-int senliL, senliR, sendiL, sendiR, line = 0, blPart, rotacao = 1, strat = 0, valorDIP = 15;
+int senliL, senliR, sendiL, sendiR, line = 0, blPart = 626, rotacao = 1, strat = 0, valorDIP = 15;
 
 //obtem o valor dos dois sensores de distancia
 void SenDi(){
@@ -118,15 +118,15 @@ void SenLi(){
 //função retirada do código do Marco Schneider
 //faz a leitura do valor do dip
 int readDIP (){
-     int n=0;
+     int n = 0;
      if(digitalRead(DIP4)==HIGH)
-          n=1;
+          n = 1;
      if(digitalRead(DIP3)==HIGH)
-          n|= (1<<1); //Bit shift (0001 --> 0010), ou seja, n =  n + 2
+          n = n + 2; //Bit shift (0001 --> 0010), ou seja, n =  n + 2
      if(digitalRead(DIP2)==HIGH)
-          n|= (1<<2); //Bit shift (0001 --> 0100), ou seja, n =  n + 4
+          n = n + 4; //Bit shift (0001 --> 0100), ou seja, n =  n + 4
      if(digitalRead(DIP1)==HIGH)
-          n|= (1<<3); //Bit shift (0001 --> 1000), ou seja, n =  n + 8
+          n = n + 8; //Bit shift (0001 --> 1000), ou seja, n =  n + 8
      return n; // Valor retornado de n
 }
 
@@ -136,302 +136,195 @@ void loop() {
      if((digitalRead(microST)) == 1){
           digitalWrite(LED, HIGH);
           switch (valorDIP) {
-               case 0: //B5: teste
-                    //o objetivo é verificar se o robô esta passando pelo switch
-                    //corretamente
-                    while(line == 0){
-                         MotorL(64);
-                         MotorR(64);
+               case 0: // 0000 -
+                    break;
+
+               case 1: // 0001 -
+                    break;
+
+               case 2: // 0010 -
+                    break;
+
+               case 3: // 0011 -
+                    break;
+
+               case 4: // 0100 -
+                    break;
+
+               case 5: // 0101 - B1 ou B5: de ladinho (meme)
+                    //by Marco Przybysz
+                    //o robô anda para trás e para frente antes de começar
+                    MotorL(255);
+                    MotorR(255);
+                    delay(100);
+                    MotorL(-255);
+                    MotorR(-255);
+                    delay(140);
+                    rotacao = 1;
+                    break;
+
+               case 6: // 0110 - B5: ronaldinho (meme)
+                    //by Marco Przybysz
+                    //espelhamento da 7
+                    while((digitalRead(microST)) == 1){
+                         if(linha == 0){
+                              MotorL(120);
+                              MotorR(160);
+                         }else{
+                              MotorL(-120);
+                              MotorR(-100);
+                         }
                          SenLi();
                     }
-                    MotorL(-64);
-                    MotorR(-64);
-                    delay(10);
-                    MotorL(-64);
-                    MotorR(-64);
-                    delay(100);
                     break;
 
-               case 1:
-                    break;
-
-               case 2:
-                    break;
-
-               case 3: //A1: roooonaldinho
+               case 7: // 0111 - B1: dibraldinho (meme)
                     //by Marco Przybysz
-                    //meme?
                     while((digitalRead(microST)) == 1){
-                         if(line != 0){
-                              MotorL(-100);
-                              MotorR(-120);
-                         }else{
+                         if(linha == 0){
                               MotorL(160);
                               MotorR(120);
+                         }else{
+                              MotorL(-100);
+                              MotorR(-120);
                          }
-                         SenLi(); //linha
+                         SenLi();
                     }
                     break;
 
-               case 4: //B3: the hunter
-                    //by Marco Przybysz
-                    //o robô caça o oponente com todo o poder
-                    strat = 1;
-                    SenDi(); //distancia
-                    SenLi(); //linha
-                    break;
-
-               case 5: //A4: dança do famoso
-                    //by Marco Przybysz
-                    //as curvas são suavizadas
-                    strat = 2;
-                    SenDi(); //distancia
-                    SenLi(); //linha
-                    break;
-
-               case 6: //B1: inhooown nwooohni
-                    //by Marco Przybysz
-                    //robô vai pra frente com tudo depois volta de ré e começa
-                    //a buscar o oponente
-                    MotorL(255);
-                    MotorR(255);
-                    delay(6);
-                    MotorL(-255);
-                    MotorR(-255);
-                    delay(9);
-                    rotacao = -1; //gira no sentido horario quando busca o oponente
-                    SenDi(); //distancia
-                    SenLi(); //linha
-                    break;
-
-               case 7: //A4: running in the 90s
-                    //by Marco Przybysz
-                    //robô faz uma curva em 45° antes de começar a buscar o oponente
-                    MotorL(64);
-                    MotorR(255);
-                    delay(5);
-                    rotacao = -1; //gira no sentido horario quando busca o oponente
-                    SenDi(); //distancia
-                    SenLi(); //linha
-                    break;
-
-               case 8: //B3: roda roda jequiti
-                    //by Marco Przybysz
-                    //robô começa girando no próprio eixo no sentido horário
-                    //para buscar o oponente
-                    SenLi();
-                    MotorL(-128);
-                    MotorR(128);
-                    SenDi(); //distancia
-                    rotacao = 1; //gira no sentido anti-horário quando busca o oponente
-                    break;
-
-               case 9: //B3: desroda jequiti
-                    //espelhamento da 8
-                    SenLi();
+               case 8: // 1000 - A2: Abertura em U
+                    // by Marco Schneider
+                    //o robô começa com um U
                     MotorL(128);
-                    MotorR(-128);
-                    SenDi(); //distancia
-                    rotacao = -1; //gira no sentido horario quando busca o oponente
-                    break;
-
-               case 10: //A4: running in the 9s
-                    //espelhamento da 7
-                    MotorL(255);
-                    MotorR(64);
-                    delay(5);
-                    rotacao = 1; //gira no sentido anti-horário quando busca o oponente
-                    SenDi(); //distancia
-                    SenLi(); //linha
-                    break;
-
-               case 11: //B5: nwooohni inhooown
-                    //espelhamento da 6
-                    MotorL(255);
-                    MotorR(255);
-                    delay(7);
-                    MotorL(-255);
-                    MotorR(-255);
-                    delay(8);
-                    rotacao = 1; //gira no sentido anti-horário quando busca o oponente
-                    SenDi(); //distancia
-                    SenLi(); //linha
-                    break;
-
-               case 12: //A2: The U
-                    //by Marco Przybysz
-                    MotorL(255);
-                    MotorR(255);
-                    delay(4);
-                    MotorL(255);
-                    MotorR(-128);
-                    delay(8);
+                    MotorR(128);
+                    delay(100);
+                    MotorL(128);
+                    MotorR(-64);
+                    delay(150);
                     rotacao = -1; //gira no sentido horario quando busca o oponente
                     SenDi(); //distancia
                     SenLi(); //linha
                     break;
 
-               case 13: //A4: No U
-                    //espelhamento do 12
-                    MotorL(255);
-                    MotorR(255);
-                    delay(4);
-                    MotorL(-128);
-                    MotorR(255);
-                    delay(8);
+               case 9: // 1001 - A4: Abertura em U espelho
+                    // by Marco Schneider
+                    //espelhamento da 8
+                    MotorL(128);
+                    MotorR(128);
+                    delay(100);
+                    MotorL(-64);
+                    MotorR(-128);
+                    delay(150);
                     rotacao = 1; //gira no sentido horario quando busca o oponente
                     SenDi(); //distancia
                     SenLi(); //linha
                     break;
 
-               case 14: //B3: the clockwise suicidal
+               case 10: //1010 - A4: running in the 9s
+                    //espelhamento da 12
+                    MotorL(155);
+                    MotorR(64);
+                    delay(64);
+                    rotacao = 1; //gira no sentido anti-horário quando busca o oponente
+                    SenDi(); //distancia
+                    SenLi(); //linha
+                    break;
+
+               case 11: //1011 - B3: roda roda jequiti
+                    //robô começa girando no próprio eixo no sentido horário
+                    //para buscar o oponente
+                    SenLi();
+                    SenDi(); //distancia
+                    rotacao = 1; //gira no sentido anti-horário quando busca o oponente
+                    break;
+
+               case 12: //1100 - A4: running in the 90s
+                    //by Marco Przybysz
+                    //robô faz uma curva em 45° antes de começar a buscar o oponente
+                    MotorL(64);
+                    MotorR(155);
+                    delay(64);
+                    rotacao = -1; //gira no sentido horario quando busca o oponente
+                    SenDi(); //distancia
+                    SenLi(); //linha
+                    break;
+
+               case 13: //1101 - B3: desroda jequiti
+                    //espelhamento da 11
+                    SenLi();
+                    SenDi(); //distancia
+                    rotacao = -1; //gira no sentido horario quando busca o oponente
+                    break;
+
+               case 14: //1110 - B3: the clockwise suicidal
                     //como o robô já ta virado pro oponente, ele liga os motores
                     //antes de qualquer coisa,  para sair mais rápido
                     MotorL(255);
                     MotorR(255);
                     rotacao = -1; //gira no sentido horario quando busca o oponente
-                    delay(16);
+                    delay(200);
                     break;
 
-               case 15: //B3: the ultimate suicidal robot
+               case 15: //1111 - B3: the ultimate suicidal robot
                     //padrão
                     //estratégia 14, mas gira anti horário
                     MotorL(255);
                     MotorR(255);
                     rotacao = 1; //gira no sentido anti-horário quando busca o oponente
-                    delay(16);
+                    delay(200);
                     break;
           }
           //a ideia é que depois da parte inicial da estratégia, a movimentação
-          //seja a mesma, exceto na estrategia 4 e 5 do Marco P.
-
-          if (strat == 1){
-               while((digitalRead(microST)) == 1){
-                    if(line != 0){
-                         if(line == 3){ //ré caso tenha linha dos dois lados
-                              MotorL(-255);
-                              MotorR(-255);
-                              delay(8);
-                         }else if(line == 2){ //vai para direita em ré
-                              MotorL(-128);
-                              MotorR(-255);
-                              delay(8);
-                         }else{ //vai para a esquerda em ré
-                              MotorL(-255);
-                              MotorR(-128);
-                              delay(8);
-                         }
-                    //caso o robô esteja na área certa...
-                    //procura o adversário girando no sentido anti-horário
-                    }else if((sendiL == 0) && (sendiR == 0)){
-                         MotorL(-200);
+          //seja a mesma
+          while((digitalRead(microST)) == 1){ //repete até desligar
+               //essa primeira parte detecta se o robô esta em cima de alguma
+               //linha usando o valor resultante da função SenLi()
+               if((line != 0) && (sendiL == 0) && (sendiR == 0)){
+                    if(line == 3){ //ré caso tenha linha dos dois lados
+                         MotorL(-255);
                          MotorR(-255);
-                    //avança em direção ao adversário
-                    }else if((sendiL == 1) && (sendiR == 1)){
-                         MotorL(255);
-                         MotorR(255);
-                    //ajusta a rota um pouco para a esquerda
-                    }else if((sendiL == 1) && (sendiR == 0)){
-                         MotorL(120);
-                         MotorR(255);
-                    //ajusta a rota um pouco para a direita
-                    }else if((sendiL == 0) && (sendiR == 1)){
-                         MotorL(255);
-                         MotorR(120);
+                         delay(150);
+                    }else if(line == 2){ //vai para direita em ré
+                         MotorL(-255);
+                         MotorR(-255);
+                         delay(80);
+                         MotorL(-128);
+                         MotorR(-255);
+                         delay(50);
+                    }else{ //vai para a esquerda em ré
+                         MotorL(-255);
+                         MotorR(-255);
+                         delay(80);
+                         MotorL(-255);
+                         MotorR(-128);
+                         delay(50);
                     }
-                    //verifica os dados dos sensores
-                    SenDi(); //distancia
-                    SenLi(); //linha
-               }
-          }else if (strat == 2){
-               while((digitalRead(microST)) == 1){
-                    if(line != 0){
-                         if(line == 3){ //ré caso tenha linha dos dois lados
-                              MotorL(-160);
-                              MotorR(-160);
-                              delay(8);
-                         }else if(line == 2){ //vai para direita em ré
-                              MotorL(-80);
-                              MotorR(-160);
-                              delay(8);
-                         }else{ //vai para a esquerda em ré
-                              MotorL(-160);
-                              MotorR(-80);
-                              delay(8);
-                         }
-                    //caso o robô esteja na área certa...
-                    //procura o adversário girando no sentido anti-horário
-                    }else if((sendiL == 0) && (sendiR == 0)){
-                         MotorL(rotacao * (150));
-                         MotorR(rotacao * (200));
-                    //avança em direção ao adversário
-                    }else if((sendiL == 1) && (sendiR == 1)){
-                         MotorL(255);
+               //caso o robô esteja na área certa...
+               //procura o adversário girando no sentido anti-horário
+               }else if((sendiL == 0) && (sendiR == 0)){
+                    if (rotacao > 0){
+                         MotorL(72);
                          MotorR(255);
-                    //ajusta a rota um pouco para a esquerda
-                    }else if((sendiL == 1) && (sendiR == 0)){
-                         MotorL(-200);
-                         MotorR(200);
-                    //ajusta a rota um pouco para a direita
-                    }else if((sendiL == 0) && (sendiR == 1)){
-                         MotorL(200);
-                         MotorR(-200);
+                    }else{
+                         MotorL(255);
+                         MotorR(75);
                     }
-                    //verifica os dados dos sensores
-                    SenDi(); //distancia
-                    SenLi(); //linha
+               //avança em direção ao adversário
+               }else if((sendiL == 1) && (sendiR == 1)){
+                    MotorL(255);
+                    MotorR(255);
+               //ajusta a rota um pouco para a esquerda
+               }else if((sendiL == 1) && (sendiR == 0)){
+                    MotorL(64);
+                    MotorR(255);
+               //ajusta a rota um pouco para a direita
+               }else if((sendiL == 0) && (sendiR == 1)){
+                    MotorL(255);
+                    MotorR(64);
                }
-          }else{
-               while((digitalRead(microST)) == 1){ //repete até desligar
-                    //essa primeira parte detecta se o robô esta em cima de alguma
-                    //linha usando o valor resultante da função SenLi()
-                    if((line != 0) && (sendiL == 0) && (sendiR == 0)){
-                         if(line == 3){ //ré caso tenha linha dos dois lados
-                              MotorL(-255);
-                              MotorR(-255);
-                              delay(20);
-                         }else if(line == 2){ //vai para direita em ré
-                              MotorL(-255);
-                              MotorR(-255);
-                              delay(13);
-                              MotorL(-128);
-                              MotorR(-255);
-                              delay(8);
-                         }else{ //vai para a esquerda em ré
-                              MotorL(-255);
-                              MotorR(-255);
-                              delay(13);
-                              MotorL(-255);
-                              MotorR(-128);
-                              delay(8);
-                         }
-                    //caso o robô esteja na área certa...
-                    //procura o adversário girando no sentido anti-horário
-                    }else if((sendiL == 0) && (sendiR == 0)){
-                         if (rotacao > 0){
-                              MotorL(72);
-                              MotorR(255);
-                         }else{
-                              MotorL(255);
-                              MotorR(75);
-                         }
-                    //avança em direção ao adversário
-                    }else if((sendiL == 1) && (sendiR == 1)){
-                         MotorL(255);
-                         MotorR(255);
-                    //ajusta a rota um pouco para a esquerda
-                    }else if((sendiL == 1) && (sendiR == 0)){
-                         MotorL(64);
-                         MotorR(255);
-                    //ajusta a rota um pouco para a direita
-                    }else if((sendiL == 0) && (sendiR == 1)){
-                         MotorL(255);
-                         MotorR(64);
-                    }
-                    //verifica os dados dos sensores
-                    SenDi(); //distancia
-                    SenLi(); //linha
-               }
+               //verifica os dados dos sensores
+               SenDi(); //distancia
+               SenLi(); //linha
           }
      //desliga os motores
      }else{
@@ -443,15 +336,7 @@ void loop() {
      //essa parte vai se repetir até que o robô comece a andar,
      //os valores já vão ser medidos para evitar atraso na hora que iniciar
      SenDi();
-     senliL = digitalRead(lineL);
-     senliR = digitalRead(lineR);
-     //define o valor no sensor de linha na parte que o robô pode andar
-     if(senliL <= senliR){
-          blPart = senliR;
-     }else{
-          blPart = senliL;
-     }
-     blPart = blPart - 150;
+     SenLi();
 
 }
 

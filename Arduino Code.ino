@@ -225,7 +225,7 @@ void loop() {
         }
         break;
       case 14: //Chave DIP 1110 (Estratégia - A2 - Abertura em U)
-        if(aberturaFoiFeita = false){          //Verifica se o movimento de abertura foi realizado
+        if(aberturaFoiFeita == false){          //Verifica se o movimento de abertura foi realizado
           //Avançar
           MotorL(128);
           MotorR(128);
@@ -368,7 +368,7 @@ void loop() {
         break;
       case 9://Chave DIP 1001 (O Uzinho Invertido) (Posição b3)
             //Esse aqui é o uzinho do Marco só que bait, sai de ré na abertura pra ver se o cara se mata
-        if (aberturaFoiFeita = false)
+        if (aberturaFoiFeita == false)
         { //Verifica se o movimento de abertura foi realizado
           //Recuar
           MotorL(-255);
@@ -472,7 +472,7 @@ void loop() {
       Estratégia 5 - Abertura = longa ; Rotina padrão = longa
       Estratégia 4 - Abertura = curta ; Rotina padrão = curta*/
       case 7: //Chave DIP 0111 - Abertura -> 16ms - Demais -> 50ms e 60ms
-        if (aberturaFoiFeita = false)
+        if (aberturaFoiFeita == false)
         { //Verifica se o movimento de abertura foi realizado
           //Recuar
           MotorL(-255);
@@ -541,7 +541,7 @@ void loop() {
         } 
         break;
       case 6: //Chave DIP 0110 - Abertura -> 50ms - Demais -> 16ms e 26ms
-        if (aberturaFoiFeita = false)
+        if (aberturaFoiFeita == false)
         { //Verifica se o movimento de abertura foi realizado
           //Recuar
           MotorL(-255);
@@ -610,7 +610,7 @@ void loop() {
         }
         break;
       case 5: //Chave DIP 0101 - Abertura -> 50ms - Demais -> 50ms e 60ms
-        if (aberturaFoiFeita = false)
+        if (aberturaFoiFeita == false)
         { //Verifica se o movimento de abertura foi realizado
           //Recuar
           MotorL(-255);
@@ -679,7 +679,7 @@ void loop() {
         }
         break;
       case 4: //Chave DIP 0100 - Abertura -> 16ms - Demais -> 16ms e 26ms
-        if (aberturaFoiFeita = false)
+        if (aberturaFoiFeita == false)
         { //Verifica se o movimento de abertura foi realizado
           //Recuar
           MotorL(-255);
